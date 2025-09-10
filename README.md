@@ -1,4 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Create Next.js For Meeting-Room
+
+```bash
+# D:/code> 
+npx create-next-app@latest meeting-room --use-npm
+√ Would you like to use TypeScript? ... No
+√ Which linter would you like to use? » Biome
+√ Would you like to use Tailwind CSS? ... Yes
+√ Would you like your code inside a `src/` directory? ... Yes
+√ Would you like to use App Router? (recommended) ... Yes
+√ Would you like to use Turbopack? (recommended) ... Yes
+√ Would you like to customize the import alias (`@/*` by default)? ... Yes
+√ What import alias would you like configured? ... @/*
+# Done Get Project
+Creating a new Next.js app in D:\BeeData\code-dev\meeting-room.
+# go to Project next.js
+cd meeting-room
+```
+## Getting More Library
+
+```bash
+# 1. Install Component UI Framework as RizzUI https://www.rizzui.com
+npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
+
+#@mui/material → core MUI components
+#@emotion/react & @emotion/styled → required by MUI for styling
+#@mui/icons-material → MUI icons
+# Other Component UI Framework AntDesign, PrimeReact, MUI as 
+#https://ant.design
+#https://primereact.org
+#https://mui.com
+# 2. Install icon
+npm install @heroicons/react lucide-react lucide-react
+# 3. install advance CSS as SCSS
+npm install sass
+```
 
 ## Getting Started
 
@@ -7,27 +42,19 @@ First, run the development server:
 ```bash
 npm run dev
 # or
-yarn dev
-# or
-pnpm dev
-# or
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
+Notic:
+- Custome Project as Much as You want by this starter Theme Project by ຈານ Bee
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 
