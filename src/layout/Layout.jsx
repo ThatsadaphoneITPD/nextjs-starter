@@ -13,7 +13,9 @@ export default function Layout({ children }) {
       <AppTopbar ref={topbarRef} />
 
       {/* Main content */}
-      <main className="flex-1 px-6 py-6">{children}</main>
+      <main className="flex-1 w-full h-auto mx-auto   ">
+        {children}
+      </main>
 
       {/* Footer */}
       <AppFooter />
