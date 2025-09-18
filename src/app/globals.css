@@ -1,6 +1,6 @@
 /* app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@100..900&display=swap');
 /* @tailwind utilities; */
 
 @layer base {
