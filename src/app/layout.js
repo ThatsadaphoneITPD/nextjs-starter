@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 import ThemeProvider from "@/components/theme-provider";
 import "./globals.css";
 import '@/style/index.scss'

@@ -1,4 +1,5 @@
 "use client";
+import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   return (
@@ -8,7 +9,7 @@ export default function LoginPage() {
         <form className="flex flex-col gap-4">
           <input type="email" placeholder="Email" className="border p-2 rounded" />
           <input type="password" placeholder="Password" className="border p-2 rounded" />
-          <button type="submit" className="bg-blue-600 text-white py-2 rounded">
+          <button type="submit" className="bg-blue-600 text-white py-2 rounded" onClick={()=>{toast.success("done")}}>
             Sign In
           </button>
         </form>
