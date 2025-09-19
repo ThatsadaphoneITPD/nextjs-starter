@@ -4,10 +4,6 @@ import "./globals.css";
 import '@/style/index.scss'
 import { Toaster } from 'react-hot-toast';
 
-export const metadata = {
-  title: "Meeting",
-  description: "Write your app description",
-};
 
 export default async function RootLayout({ children }) {
   return (
