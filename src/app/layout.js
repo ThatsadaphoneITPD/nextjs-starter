@@ -1,6 +1,7 @@
 import ThemeProvider from "@/components/theme-provider";
 import "./globals.css";
 import '@/style/index.scss'
+import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
   title: "Meeting",
@@ -18,7 +19,8 @@ export default async function RootLayout({ children }) {
         suppressHydrationWarning
       >
         <ThemeProvider>
-            {children}
+          <Toaster />
+          {children}
         </ThemeProvider>
       </body>
     </html>
