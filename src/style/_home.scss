@@ -1,20 +1,68 @@
 .cover-home {
-  background-image: url("/cover-home.svg");
+  position: relative;
+  background-image: url("/cover.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 18.75rem;
+  overflow: hidden;
+}
 
-  .text {
-    font-weight: bold;
-    font-size: 3rem;
-    background: var(--background-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent; // fallback
-    -webkit-text-fill-color: transparent;
-  }
+.cover-home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* สีทับที่ต้องการ */
+  opacity: 0.4; /* ค่าความทึบแสง (0.0 - 1.0) */
+  z-index: 1;
 }
-.fiter-home {
-    padding: 2rem;
+
+.cover-home h1 {
+  position: relative;
+  z-index: 2; /* ทำให้ข้อความอยู่บน pseudo-element */
+  color: #131fa8; /* เปลี่ยนสีข้อความให้เป็นสีขาวหรือสีที่ตัดกับพื้นหลัง */
 }
+.cover-home .text {
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  font-size: 3rem;
+  background: var(--background-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent; /* fallback */
+  -webkit-text-fill-color: transparent;
+}
+
+/* Select value text */
+.MuiSelect-select {
+  font-family: 'Noto Sans Lao' !important;
+  padding: 2px 8px !important;
+}
+
+/* Input label text */
+.MuiInputLabel-root {
+  font-family: 'Noto Sans Lao' !important;
+  top: -4px !important; // keep alignment fix
+}
+
+/* Dropdown menu items */
+.MuiMenuItem-root {
+  font-family: 'Noto Sans Lao' !important;
+}
+
+/* CardActions container */
+.MuiCardActions-root {
+  font-family: 'Noto Sans Lao' !important;
+}
+
+/* Buttons inside CardActions (and all MUI buttons globally) */
+.MuiButton-root {
+  font-family: 'Noto Sans Lao' !important;
+}
+
+
+
