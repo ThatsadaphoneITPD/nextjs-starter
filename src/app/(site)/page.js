@@ -4,8 +4,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import CardAvilableRooms from '@/components/card-room/CardAvilableRooms';
-import CardBooking from '@/components/card-room/card-book'; 
+import CardBooking from '@/components/card-room/card-book';
 import RoomOverview from '@/components/card-room/room-overview';
 
 export default function Home() {
@@ -14,15 +17,14 @@ export default function Home() {
   const [filterCapacity, setFilterCapacity] = useState('');
   const [filterAmenities, setFilterAmenities] = useState('');
 
-  // Dummy data (unchanged)
   const availableRooms = [
     { path_image: "/mt-room.png", room_name: "ຫ້ອງ 801", avilable_date: "2025-02-04", time: "8:00AM", capacity: "6-10", status: 1 },
-    { path_image: "/room201.png", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "8:30AM", capacity: "50-1", status: 1 },
+    { path_image: "/room201.png", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "8:30AM", capacity: "50-100", status: 1 },
     { path_image: "/room201.png", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "13:00PM", capacity: "15-20", status: 1 },
-    { path_image: "/room801.jpg", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "13:00PM", capacity: "15-20", status: 2 },
-    { path_image: "/room801.jpg", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "14:00PM", capacity: "15-20", status: 2 },
+    { path_image: "/room801.jpg", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "13:00PM", capacity: "15-20", status: 1 },
+    { path_image: "/room801.jpg", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "14:00PM", capacity: "15-20", status: 1 },
   ];
-  
+
   const upcomingBookings = [
     { title: 'ສຸຂະພາບຈິດໃນຍຸກດິຈິຕ້ອນ', roomNumber: 'ຫ້ອງ 201', date: 'Feb 4, 2025', time: '10:00AM-11:00AM', capacity: '100-150' },
     { title: 'ການສຶກສາ ແລະ ຮຽນອອນໄລນ໌', roomNumber: 'ຫ້ອງ 801', date: 'Feb 4, 2025', time: '10:00AM-11:00AM', capacity: '100-150' },
@@ -32,146 +34,138 @@ export default function Home() {
     { roomNumber: 'ຫ້ອງ 102', department: 'IT Department', capacity: '10 ຄົນ', equipment: ['Projector', 'Extra Chairs', 'Drink Service'] },
     { roomNumber: 'ຫ້ອງ 201', department: 'IT Department', capacity: '10 ຄົນ', equipment: ['Projector', 'Extra Chairs', 'Drink Service'] },
     { roomNumber: 'ຫ້ອງ 801', department: 'IT Department', capacity: '10 ຄົນ', equipment: ['Projector', 'Extra Chairs', 'Drink Service'] },
-    { roomNumber: 'ຫ້ອງ 101', department: 'IT Department', capacity: '10 ຄົນ', equipment: ['Projector', 'Extra Chairs'] },
-    { roomNumber: 'ຫ້ອງ 201', department: 'IT Department', capacity: '10 ຄົນ', equipment: ['Projector', 'Extra Chairs'] },
-    { roomNumber: 'ຫ້ອງ 801', department: 'IT Department', capacity: '10 ຄົນ', equipment: ['Projector', 'Extra Chairs'] },
   ];
 
+  // ฟังก์ชัน clear filter
+  const handleClear = (setter) => (event) => {
+    event.stopPropagation();
+    setter('');
+  };
+
+  // ฟังก์ชันเปลี่ยนค่าแต่ละ dropdown
   const handleChangeTime = (e) => setFilterTime(e.target.value);
   const handleChangeDuration = (e) => setFilterDuration(e.target.value);
   const handleChangeCapacity = (e) => setFilterCapacity(e.target.value);
   const handleChangeAmenities = (e) => setFilterAmenities(e.target.value);
 
+  // ✅ ฟังก์ชันใหม่: รองรับ 13:00PM และเวลา 24 ชั่วโมง
+  const convertTo24Hour = (timeStr) => {
+    const match = timeStr.match(/(\d+):(\d+)(AM|PM)?/i);
+    if (!match) return -1;
+
+    let [hour, minute, modifier] = [parseInt(match[1], 10), parseInt(match[2], 10), match[3]];
+
+    // ถ้าไม่มี AM/PM แสดงว่าเป็นเวลา 24 ชม. อยู่แล้ว
+    if (!modifier) return hour;
+
+    // ถ้าเกิน 12 ให้ถือว่าเป็น 24 ชม. อยู่แล้ว เช่น 13PM
+    if (hour > 12) return hour;
+
+    if (modifier.toUpperCase() === "PM" && hour !== 12) hour += 12;
+    if (modifier.toUpperCase() === "AM" && hour === 12) hour = 0;
+
+    return hour;
+  };
+
   const filteredRooms = availableRooms.filter(room => {
-    // Logic for filtering by time
-    const timeMatch = (() => {
-      if (!filterTime) return true;
-      const hour = parseInt(room.time.split(':')[0]);
-      if (filterTime === 'Morning') return hour >= 8 && hour < 12;
-      if (filterTime === 'Afternoon') return hour >= 12 && hour < 18;
-      return true;
-    })();
-
-    // Logic for filtering by capacity
-    const capacityMatch = (() => {
-      if (!filterCapacity) return true;
-      if (filterCapacity === '6-10') return room.capacity === '6-10';
-      if (filterCapacity === '15-20') return room.capacity === '15-20';
-      if (filterCapacity === '100-150') return room.capacity === '100-150';
-      return true;
-    })();
-
-  
+    const roomHour = convertTo24Hour(room.time);
+    const timeMatch = (filterTime === '' || filterTime === 'ທັງໝົດ') ||
+      (filterTime === 'ພາກເຊົ້າ' && roomHour >= 8 && roomHour < 12) ||
+      (filterTime === 'ພາກແລງ' && roomHour >= 12 && roomHour < 18);
+    const capacityMatch = !filterCapacity || room.capacity === filterCapacity;
 
     return timeMatch && capacityMatch;
   });
 
-  const handleSearch = () => {
-    console.log("Search parameters:", { filterTime, filterDuration, filterCapacity, filterAmenities });
-  };
-  const filterContainerStyle = " p-2 rounded-lg flex flex-wrap gap-1 items-center justify-center";
-  const formControlStyle = { m: 1, minWidth: 120, height: 40, bgcolor: 'white' };
-  
+  const formControlStyle = { m: 1, minWidth: 120, height: 40, bgcolor: 'white', borderRadius: 2 };
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <section className="cover-home flex items-center justify-center h-screen bg-[#131FA8]">
-        <h1 className=" text-5xl font-bold text-[#131FA8]">
-          Meeting Room
-        </h1>
+
+      {/* Header */}
+      <section className="cover-home flex items-center justify-center h-60 sm:h-80 md:h-96 bg-[#131FA8]">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center">Meeting Room</h1>
       </section>
-      
-      <section className="p-2">
-        
-        {/* Filter Section */}
-        <div className={filterContainerStyle}>
-          {/* Time Dropdown */}
-          <FormControl sx={formControlStyle} size="small">
-            <InputLabel>ຊ່ວງ</InputLabel>
-            <Select value={filterTime} onChange={handleChangeTime} label="Time">
-           
-              <MenuItem value="/">ທັງໝົດ</MenuItem>
-              <MenuItem value="Morning">ພາກເຊົ້າ</MenuItem>
-              <MenuItem value="Afternoon">ພາກແລງ</MenuItem>
-            </Select>
-          </FormControl>
-          
-          {/* Duration Dropdown */}
-          <FormControl sx={formControlStyle} size="small">
-            <InputLabel>ຊົ່ວໂມງປະຊຸມ</InputLabel>
-            <Select value={filterDuration} onChange={handleChangeDuration} label="Duration">
-               <MenuItem value="/">--</MenuItem>
-              <MenuItem value="1hr">1 ຊົ່ວໂມງ</MenuItem>
-              <MenuItem value="2hr">2 ຊົ່ວໂມງ</MenuItem>
-              <MenuItem value="3hr">3 ຊົ່ວໂມງ</MenuItem>
-            </Select>
-          </FormControl>
-          
-          {/* Capacity Dropdown */}
-          <FormControl sx={formControlStyle} size="small">
-            <InputLabel>ຈຳນວນຄົນ</InputLabel>
-            <Select value={filterCapacity} onChange={handleChangeCapacity} label="Capacity">
-               <MenuItem value="/">--</MenuItem>
-              <MenuItem value="6-10">6-10 ຄົນ</MenuItem>
-              <MenuItem value="15-20">15-20 ຄົນ</MenuItem>
-              <MenuItem value="100-150">100-150 ຄົນ</MenuItem>
-            </Select>
-          </FormControl>
 
-          {/* Amenities Dropdown */}
-          <FormControl sx={formControlStyle} size="small">
-            <InputLabel>ບໍລິການ</InputLabel>
-            <Select value={filterAmenities} onChange={handleChangeAmenities} label="Amenities">
-              <MenuItem value="/">--</MenuItem>
-              <MenuItem value="projector">Projector</MenuItem>
-              <MenuItem value="whiteboard">Whiteboard</MenuItem>
-              <MenuItem value="DrinkService">Drink Service</MenuItem>
-              <MenuItem value="ExtraChair">Extra Chair</MenuItem>
-            </Select>
-          </FormControl>
+      {/* Filter Section */}
+      <section className="p-4">
+        <div className="flex flex-row flex-wrap gap-2 items-stretch justify-center">
+          {[{
+            label: 'ຊ່ວງ', value: filterTime, onChange: handleChangeTime, options: ['ພາກເຊົ້າ', 'ພາກແລງ'], setter: setFilterTime
+          }, {
+            label: 'ຊົ່ວໂມງປະຊຸມ', value: filterDuration, onChange: handleChangeDuration, options: ['1ຊົ່ວໂມງ', '2ຊົ່ວໂມງ', '3ຊົ່ວໂມງ'], setter: setFilterDuration
+          }, {
+            label: 'ຈຳນວນຄົນ', value: filterCapacity, onChange: handleChangeCapacity, options: ['6-10', '15-20', '100-150'], setter: setFilterCapacity
+          }, {
+            label: 'ບໍລິການ', value: filterAmenities, onChange: handleChangeAmenities, options: ['projector', 'whiteboard', 'DrinkService', 'ExtraChair'], setter: setFilterAmenities
+          }].map((filter, idx) => (
+            <Box key={idx} sx={{ position: 'relative', flex: '1 1 auto', minWidth: 120, maxWidth: 'calc(50% - 4px)' }}>
+              <FormControl sx={formControlStyle} size="small" fullWidth>
+                <InputLabel>{filter.label}</InputLabel>
+                <Select
+                  value={filter.value}
+                  onChange={filter.onChange}
+                  label={filter.label}
+                  sx={{
+                    pr: filter.value && filter.value !== '/' && filter.value !== 'ທັງໝົດ' ? '40px !important' : undefined
+                  }}
+                >
+                  {filter.options.map((opt, i) => (
+                    <MenuItem key={i} value={opt === '/' || opt === 'ທັງໝົດ' ? '' : opt}>
+                      {opt === '/' ? 'ທັງໝົດ' : opt}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-          {/* Search Button */}
-          {/* <Button
-            variant="contained"
-            sx={buttonStyle}
-            onClick={handleSearch}
-          >
-            <SearchIcon sx={{ mr: 1 }} /> ຄົ້ນຫາ
-          </Button> */}
+              {(filter.value && filter.value !== '/' && filter.value !== 'ທັງໝົດ') && (
+                <IconButton
+                  size="small"
+                  onClick={handleClear(filter.setter)}
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 32,
+                    p: 0.5,
+                    zIndex: 10,
+                    color: 'rgba(0, 0, 0, 0.54)',
+                    '&:hover': { color: '#131FA8' },
+                  }}
+                >
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              )}
+            </Box>
+          ))}
         </div>
-        </section>
+      </section>
 
-        <section className="p-8">
-        <h2 className="text-2xl font-bold mb-4  text-[#131FA8]">ຫ້ອງວ່າງ</h2>
-
-        <div className="avilable-room grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+      {/* Available Rooms */}
+      <section className="p-4">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 text-[#131FA8]">ຫ້ອງວ່າງ</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filteredRooms.map((room, idx) => (
-            <div key={idx} className="flex justify-center">
-              <CardAvilableRooms {...room} />
-            </div>
-          ))}
-        </div>
-        </section>
-      
-      <section className="p-8">
-        <h2 className="text-2xl font-bold mb-4 text-[#131FA8]">ວາລະທີ່ດຳເນີນງານຢູ່</h2>
-        <div className="flex flex-wrap gap-4">
-          {upcomingBookings.map((booking, index) => (
-            <CardBooking
-              key={index}
-              title={booking.title}
-              date={booking.date}
-              time={booking.time}
-              capacity={booking.capacity}
-              roomNumber={booking.roomNumber}
-            />
+            <CardAvilableRooms key={idx} {...room} />
           ))}
         </div>
       </section>
 
-      <section className="p-8">
-        <h2 className="text-2xl font-bold mb-4 text-[#131FA8]">ພາບລວມຫ້ອງຂອງມື້ນີ້</h2>
-        <RoomOverview roomData={roomOverview} />
+      {/* Upcoming Bookings */}
+      <section className="p-4">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 text-[#131FA8]">ວາລະທີ່ດຳເນີນງານຢູ່</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {upcomingBookings.map((booking, idx) => (
+            <CardBooking key={idx} {...booking} />
+          ))}
+        </div>
+      </section>
+
+      {/* Room Overview */}
+      <section className="p-4 overflow-x-auto">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 text-[#131FA8]">ພາບລວມຫ້ອງຂອງມື້ນີ້</h2>
+        <div className="min-w-full sm:min-w-[600px]">
+          <RoomOverview roomData={roomOverview} />
+        </div>
       </section>
     </div>
   );
