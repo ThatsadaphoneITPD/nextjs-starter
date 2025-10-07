@@ -77,7 +77,7 @@ export default function Home() {
     return timeMatch && capacityMatch;
   });
 
-  const formControlStyle = { m: 1, minWidth: 120, height: 40, bgcolor: 'white', borderRadius: 2 };
+  const formControlStyle = { m: 1, minWidth: 120,  bgcolor: 'white', borderRadius: 2 };
 
   return (
     <div className="bg-gray-50 min-h-screen">
