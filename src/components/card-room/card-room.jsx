@@ -1,13 +1,14 @@
-import React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 export default function CardRoom(props) {
   const { path_image, room_name, avilable_date, time, capacity, status } =
@@ -28,47 +29,47 @@ export default function CardRoom(props) {
   const isNotAvailable = String(status) === "2";
 
   return (
-    <Card
-      className="rounded-lg shadow-md  mx-4"
+    <Card className="rounded-lg shadow-md mx-2 sm:mx-4"
       sx={{
+        width: '100%',
         maxWidth: 230,
-        height: "auto",
-        borderRadius: "1rem", // 👈 rounded corners
+        borderRadius: "1rem",
         overflow: "hidden",
+        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px", 
       }}
     >
       <CardMedia
         component="img"
-        height="100"
-        image={path_image ? path_image : ""}
+        height="100" // Reduced image height
+        image={path_image || ''}
         alt="Meeting Room"
-        className="object-cover h-24"
+        className="object-cover h-32 w-full"
       />
-      <CardContent className="p-3">
+      <CardContent className="p-2">
         <Typography
           gutterBottom
-          variant="subtitle1"
+          variant="h6"
           component="div"
-          className="font-bold !important"
+          className="font-bold text-sm !important leading-tight" // Smaller font size and tighter leading
         >
-          {room_name ? room_name : "--"}
+          {room_name || '--'}
         </Typography>
-        <div className="flex flex-col gap-0 text-xs text-gray-600">
+        <div className="flex flex-col gap-1 text-xs text-gray-600 mt-1">
           <div className="flex items-center gap-1">
-            <CalendarTodayIcon fontSize="small" sx={{ color: "#131FA8" }} />
-            <span>{avilable_date ? avilable_date : "--"}</span>
+            <CalendarTodayIcon sx={{ color: '#131FA8', fontSize: '1rem' }} /> {/* Smaller icon */}
+            <span>{avilable_date || '--'}</span>
           </div>
           <div className="flex items-center gap-1">
-            <AccessTimeIcon fontSize="small" sx={{ color: "#131FA8" }} />
-            <span>{time ? time : "--"}</span>
+            <AccessTimeIcon sx={{ color: '#131FA8', fontSize: '1rem' }} /> {/* Smaller icon */}
+            <span>{time || '--'}</span>
           </div>
           <div className="flex items-center gap-1">
-            <PermIdentityIcon fontSize="small" color="disabled" />
-            <span>{capacity ? capacity : "--"}</span>
+            <PermIdentityIcon sx={{ color: '#131FA8', fontSize: '1rem' }} /> {/* Using a different icon for consistency */}
+            <span>{capacity || '--'}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex justify-end ">
             <span
-              className="font-semibold text-xs" // Smaller text
+              className="font-semibold text-sm" // Smaller text
               style={{ color: statusColor().color }}
             >
               {statusColor().text}
@@ -77,12 +78,12 @@ export default function CardRoom(props) {
         </div>
       </CardContent>
       {(isAvailable || isNotAvailable) && (
-        <CardActions className="p-3 pt-0 flex justify-center">
+        <CardActions className="p-1 flex justify-center">
           <Button
             sx={{
-              borderRadius: "2rem",
+              borderRadius: "1rem",
               px: 9,
-              py: 1.5,
+              py: 1,
               fontWeight: "bold",
               backgroundColor: "#131FA8",
               color: "#fff",

@@ -25,16 +25,22 @@ export default function CardAvilableRooms(props) {
 
     const isAvailable = String(status) === "1";
     const isNotAvailable = String(status) === "2";
+
     
     return (
-        <Card className="rounded-lg flex mx-6 my-5" sx={{ width: 360, height: 194, borderRadius: "1rem", overflow: "hidden" }}>
+        <Card className="rounded-lg flex mx-6 my-5 md:h-[194]" 
+        sx={{ width: 360, 
+        borderRadius: "1rem", 
+        overflow: "hidden",
+        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px", 
+        }}>
             {/* ✅ Removed fixed width/height and added a flex basis to let it adapt */}
             <CardMedia
                 component="img"
                 image={path_image ? path_image : ''}
                 alt="Meeting Room"
                 className="object-cover"
-                sx={{ flexBasis: '45%', minWidth: '160px' }}
+                 sx={{ width: 160, height: 180 }}
             />
             
             {/* Right: Content */}
@@ -51,15 +57,15 @@ export default function CardAvilableRooms(props) {
 
                     <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs sm:text-sm text-gray-600">
                         <div className="flex items-center gap-1">
-                            <CalendarTodayIcon fontSize="small" color="info" />
+                            <CalendarTodayIcon sx={{ color: '#131FA8', fontSize: '1rem' }}/>
                             <span className='text-[0.58rem] whitespace-nowrap'>{avilable_date ? avilable_date : "--"}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                            <AccessTimeIcon fontSize="small" color="info" />
+                            <AccessTimeIcon sx={{ color: '#131FA8', fontSize: '1rem' }} />
                             <span>{time ? time : "--"}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                            <PermIdentityIcon fontSize="small" color="disabled" />
+                            <PermIdentityIcon sx={{ color: '#131FA8', fontSize: '1rem' }} />
                             <span>{capacity ? capacity : "--"}</span>
                         </div>
                         <div className="flex justify-end mt-3">

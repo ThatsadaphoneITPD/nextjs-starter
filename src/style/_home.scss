@@ -63,6 +63,17 @@
 .MuiButton-root {
   font-family: 'Noto Sans Lao' !important;
 }
+.MuiTypography-root {
+  font-family: 'Noto Sans Lao' !important;
+}
+.MuiFormControl-root .MuiInputBase-root {
+  height: 30px !important; 
+}
+
+/* ปรับ Padding ภายในกล่อง Select เพื่อให้ข้อความอยู่ตรงกลาง */
+.MuiSelect-select {
+  font-family: 'Noto Sans Lao' !important;
+}
 
 
 
