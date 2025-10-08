@@ -6,7 +6,7 @@
 @layer base {
   /* light theme */
   :root {
-    --font-global: 'Noto Sans Lao', sans-serif;
+    --font-global: "Noto Sans Lao", sans-serif;
     --background: 255 255 255;
     --foreground: 72 72 72;
     --text-color: #454ca1;
@@ -26,6 +26,17 @@
     --background: 4 16 105; /* deep blue fallback */
     --bg-color: white;
     --text-color: #454ca1;
+    --color-brand-50: #eaf2ff;
+    --color-brand-100: #d4e4ff;
+    --color-brand-200: #a9c9ff;
+    --color-brand-300: #7eaeff;
+    --color-brand-400: #5393ff;
+    --color-brand-500: #2978ff;
+    --color-brand-600: #1f60cc;
+    --color-brand-700: #174899;
+    --color-brand-800: #0f3066;
+    --color-brand-900: #081833;
+
     --foreground: 255 255 255;
     --primary-lighter: 255 255 255;
     --primary-default: 165 168 19; /* yellow */
@@ -54,4 +65,10 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }

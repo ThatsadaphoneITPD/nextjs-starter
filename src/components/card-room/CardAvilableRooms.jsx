@@ -10,7 +10,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 export default function CardAvilableRooms(props) {
-    const { path_image, room_name, avilable_date, time, capacity, status } = props;
+    const { path_image, room_name, avilable_date, time, capacity, status, onClick } = props;
 
     const statusColor = () => {
         switch (String(status)) {
@@ -82,6 +82,7 @@ export default function CardAvilableRooms(props) {
                 {(isAvailable || isNotAvailable) && (
                     <CardActions className="p-4 items-center justify-center">
                         <Button
+                            onClick={onClick}
                             sx={{
                                 borderRadius: "2rem",
                                 px: 9,

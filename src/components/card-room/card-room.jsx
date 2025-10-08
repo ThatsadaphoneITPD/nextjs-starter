@@ -11,16 +11,17 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GroupsIcon from '@mui/icons-material/Groups';
 
 export default function CardRoom(props) {
-  const { path_image, room_name, avilable_date, time, capacity, status } = props;
+  const { path_image, room_name, avilable_date, time, capacity, status } =
+    props;
 
   const statusColor = () => {
     switch (String(status)) {
-      case '1':
-        return { color: '#06D001', text: 'ວ່າງ' };
-      case '2':
-        return { color: '#E30C0C', text: 'ບໍ່ວ່າງ' };
+      case "1":
+        return { color: "#06D001", text: "ວ່າງ" };
+      case "2":
+        return { color: "#E30C0C", text: "ບໍ່ວ່າງ" };
       default:
-        return { color: '#131FA8', text: '--' };
+        return { color: "#131FA8", text: "--" };
     }
   };
 
