@@ -10,19 +10,23 @@ import CloseIcon from '@mui/icons-material/Close';
 import CardAvilableRooms from '@/components/card-room/CardAvilableRooms';
 import CardBooking from '@/components/card-room/card-book';
 import RoomOverview from '@/components/card-room/room-overview';
+import Modal from "@mui/material/Modal";
+import RoomPopup from "@/components/room-book/room-popup";
 
 export default function Home() {
+  const [currentItem, setItem] = useState();
+  const [openModal, setModadl] = useState(false);
   const [filterTime, setFilterTime] = useState('');
   const [filterDuration, setFilterDuration] = useState('');
   const [filterCapacity, setFilterCapacity] = useState('');
   const [filterAmenities, setFilterAmenities] = useState('');
 
   const availableRooms = [
-    { path_image: "/mt-room.png", room_name: "ຫ້ອງ 801", avilable_date: "2025-02-04", time: "8:00AM", capacity: "6-10", status: 1 },
-    { path_image: "/room201.png", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "8:30AM", capacity: "50-100", status: 1 },
-    { path_image: "/room201.png", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "13:00PM", capacity: "15-20", status: 1 },
-    { path_image: "/room801.jpg", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "13:00PM", capacity: "15-20", status: 1 },
-    { path_image: "/room801.jpg", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "14:00PM", capacity: "15-20", status: 1 },
+    { id: 1, room_number: 801, path_image: "/mt-room.png", room_name: "ຫ້ອງ 801", avilable_date: "2025-02-04", time: "8:00AM", capacity: "6-10", status: 1 },
+    { id: 2, room_number: 302, path_image: "/room201.png", room_name: "ຫ້ອງ 302", avilable_date: "2025-02-05", time: "8:30AM", capacity: "50-100", status: 1 },
+    { id: 3, room_number: 303, path_image: "/room201.png", room_name: "ຫ້ອງ 303", avilable_date: "2025-02-05", time: "13:00PM", capacity: "15-20", status: 1 },
+    { id: 4, room_number: 304, path_image: "/room801.jpg", room_name: "ຫ້ອງ 304", avilable_date: "2025-02-05", time: "13:00PM", capacity: "15-20", status: 1 },
+    { id: 5, room_number: 305, path_image: "/room801.jpg", room_name: "ຫ້ອງ 305", avilable_date: "2025-02-05", time: "14:00PM", capacity: "15-20", status: 1 },
   ];
 
   const upcomingBookings = [
@@ -47,6 +51,18 @@ export default function Home() {
   const handleChangeDuration = (e) => setFilterDuration(e.target.value);
   const handleChangeCapacity = (e) => setFilterCapacity(e.target.value);
   const handleChangeAmenities = (e) => setFilterAmenities(e.target.value);
+  const handleModal = (item) => {
+    console.log("item", item);
+    setItem(item);
+    setTimeout(() => {
+      setModadl(true);
+    }, 300);
+  };
+
+  const closeModal = () => {
+    setModadl(false);
+  };
+
 
   // ✅ ฟังก์ชันใหม่: รองรับ 13:00PM และเวลา 24 ชั่วโมง
   const convertTo24Hour = (timeStr) => {
@@ -77,10 +93,21 @@ export default function Home() {
     return timeMatch && capacityMatch;
   });
 
-  const formControlStyle = { m: 1, minWidth: 120,  bgcolor: 'white', borderRadius: 2 };
+  const formControlStyle = { m: 1, minWidth: 120, bgcolor: 'white', borderRadius: 2 };
+  const style = {position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4, borderRadius: "1rem"};
 
   return (
     <div className="bg-gray-50 min-h-screen">
+      <Modal
+        open={openModal}
+        onClose={closeModal}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <Box sx={{ ...style, width: 500 }}>
+          <RoomPopup itemRow={currentItem} onClose={closeModal} />
+        </Box>
+      </Modal>
 
       {/* Header */}
       <section className="cover-home flex items-center justify-center h-60 sm:h-80 md:h-96 bg-[#131FA8]">
@@ -145,7 +172,7 @@ export default function Home() {
         <h2 className="text-xl sm:text-2xl font-bold mb-4 text-[#131FA8]">ຫ້ອງວ່າງ</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filteredRooms.map((room, idx) => (
-            <CardAvilableRooms key={idx} {...room} />
+            <CardAvilableRooms key={idx} {...room} onClick={() => { handleModal(room) }} />
           ))}
         </div>
       </section>

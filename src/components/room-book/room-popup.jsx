@@ -1,4 +1,6 @@
+'use client';
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation';
 import {
   ChevronLeft,
   Users,
@@ -10,7 +12,7 @@ import {
 
 export default function RoomPopup({ itemRow, onClose }) {
   console.log("itemRow", itemRow);
-
+   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(6);
   const [currentMonth, setCurrentMonth] = useState("September");
   const [selectedTime, setSelectedTime] = useState("8:00 - 11:00 am");
@@ -67,21 +69,8 @@ export default function RoomPopup({ itemRow, onClose }) {
   };
 
   const handleBooking = () => {
-    const bookingData = {
-      room: roomData.name,
-      date: `${currentMonth} ${selectedDate}`,
-      time: selectedTime,
-      user: roomData.user,
-      userId: roomData.userId,
-    };
-
-    console.log("Booking data:", bookingData);
-    alert(`Room booked for ${currentMonth} ${selectedDate} at ${selectedTime}`);
-    window.location.href = "/booking/1";
-
-    if (onClose) {
-      onClose(bookingData);
-    }
+    router.push(`/booking/${itemRow?.room_number}`);
+    onClose();
   };
 
   const handleClose = () => {
@@ -94,7 +83,7 @@ export default function RoomPopup({ itemRow, onClose }) {
     // <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div className="">
       {/* Header */}
-      <div className="bg-blue-600 text-white px-2 py-2 flex items-center flex-shrink-0">
+      <div className="bg-blue-600 text-white px-2 py-2 flex items-center flex-shrink-0 rounded-lg">
         <button onClick={handleClose} className="mr-2">
           <ChevronLeft className="w-4 h-4" />
         </button>

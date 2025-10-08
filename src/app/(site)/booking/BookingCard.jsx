@@ -14,11 +14,11 @@ function Section({ title, children }) {
 
 export default function BookingCard({ itemRow, onBookingSubmit, roomData }) {
   const defaultBookings = useMemo(() => [
-    {
-      date: new Date(2025, 1, 4, 10, 0, 0),
-      startTime: '08:30',
-      endTime: '11:30'
-    }
+    // {
+    //   date: new Date(2025, 1, 4, 10, 0, 0),
+    //   startTime: '08:30',
+    //   endTime: '11:30'
+    // }
   ], [])
   
   const [selectedBookings, setSelectedBookings] = useState(defaultBookings)
@@ -114,7 +114,7 @@ export default function BookingCard({ itemRow, onBookingSubmit, roomData }) {
           {selectedBookings.length > 0 && (
             <div className="mt-3 space-y-2">
               <div className="text-xs font-medium text-slate-700">ເວລາທີ່ເລືອກໄວ້ :</div>
-              {selectedBookings.map((booking, index) => (
+              {[...selectedBookings].sort((a, b) => new Date(a.date) - new Date(b.date)).map((booking, index) => (
                 <div key={index} className="rounded-lg border border-slate-200 bg-slate-50 p-2">
                   <div className="mb-1.5 text-xs font-medium text-slate-600">
                     {new Intl.DateTimeFormat('en-US', { 

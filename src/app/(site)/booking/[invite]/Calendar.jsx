@@ -54,6 +54,7 @@ export default function Calendar({ selectedBookings, onChange }) {
   const [month, setMonth] = useState(() => {
     return startOfMonth(new Date())
   })
+  const [limitBookDays, setBookDays] = useState(6)
   
   const weeks = useMemo(() => {
     const start = startOfWeek(startOfMonth(month))
@@ -96,7 +97,7 @@ export default function Calendar({ selectedBookings, onChange }) {
       let newBookings = [...selectedBookings, newBooking]
       
       // If we have more than 3 bookings, remove the oldest one
-      if (newBookings.length > 3) {
+      if (newBookings.length > limitBookDays) {
         newBookings = newBookings.slice(1)
       }
       
