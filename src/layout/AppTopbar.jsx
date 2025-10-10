@@ -8,11 +8,12 @@ import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import LoginIcon from "@mui/icons-material/Login";
 import Image from "next/image";
-
+import PersonIcon from '@mui/icons-material/Person';
 const menuItems = [
   { label: "ໜ້າຫຼັກ", href: "/", icon: HomeIcon },
   { label: "ຫ້ອງປະຊຸມ", href: "/rooms", icon: CalendarIcon },
   { label: "ການຈອງຫ້ອງ", href: "/booking", icon: CalendarIcon },
+  { label: "ຜູ້ໃຊ", href: "/profile", icon: PersonIcon },
 ];
 
 export default function AppTopbar() {
