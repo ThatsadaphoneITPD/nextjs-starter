@@ -3,7 +3,7 @@ import React, { useState, useCallback } from "react";
 import RoomCard from "./RoomCard";
 import BookingCard from "../BookingCard";
 import BookingSummary from "./BookingSummary";
-import Complete from "./Complete";
+import Complete from "./complete";
 
 export default function Page() {
   const [currentStep, setCurrentStep] = useState('booking')
