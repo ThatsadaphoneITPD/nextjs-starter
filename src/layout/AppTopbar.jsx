@@ -27,7 +27,7 @@ export default function AppTopbar() {
         {/* Left: Logo */}
         <div className="flex items-center gap-3 font-bold text-lg text-white">
           <Image
-            src="/edl_logo.ico" // 👉 replace with your image path in public folder
+            src="/edl1.png" // 👉 replace with your image path in public folder
             alt="MeetingRoom Logo"
             width={40} // matches w-10
             height={40} // matches h-10
