@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { initialState } from '../constant';
-import axiosClient from '../config-API';
+import axiosClient from '../config-api';
 
 export const useOfficeStore = create((set, get) => ({
     ...initialState,
