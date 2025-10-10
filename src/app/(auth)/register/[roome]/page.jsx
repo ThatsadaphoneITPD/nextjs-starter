@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-export function FlipCard({ showInside, setShowInside, handleInsideSubmit, handleOutsideSubmit }) {
+function FlipCard({ showInside, setShowInside, handleInsideSubmit, handleOutsideSubmit }) {
   return (
     <div >
       {/* flip container */}

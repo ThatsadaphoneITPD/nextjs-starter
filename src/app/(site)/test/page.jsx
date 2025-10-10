@@ -9,7 +9,7 @@ import React, { useState } from "react";
  *  - className: extra classes for container
  *  - w/h: Tailwind width/height classes (default: w-64 h-40)
  */
-export function FlipCard({
+function FlipCard({
   front,
   back,
   className = "",
